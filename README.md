@@ -37,7 +37,7 @@ One `[Peer]` block per client. `AllowedIPs` = that client's tunnel IP (`/32`) + 
 | `HEADEND_ALLOWED_IPS` | Head end's own tunnel IP (what this client routes through the tunnel) | `100.64.0.1/32` |
 | `CLIENT_TUNNEL_IP` | This container's tunnel address | `100.64.0.2/32` |
 | `REAL_LAN_SUBNET` | Client's actual LAN subnet | `192.0.2.0/24` |
-| `SHADOW_SUBNET` | *(optional)* Alternate subnet advertised to head end, used only if `REAL_LAN_SUBNET` collides with another client's. When set, the container DNATs inbound traffic to `SHADOW_SUBNET` back to `REAL_LAN_SUBNET`. Omit for a direct 1:1 mapping (no rewrite). | `198.51.100.0/24` |
+| `SHADOW_SUBNET` | *(optional)* Alternate subnet advertised to head end, used only if `REAL_LAN_SUBNET` collides with another. When set, the container DNATs inbound traffic to `SHADOW_SUBNET` back to `REAL_LAN_SUBNET`. Omit for a direct 1:1 mapping (no rewrite). | `198.51.100.0/24` |
 
 On first boot, the container generates a WireGuard keypair under `/keys` (persist this volume) and prints its public key — add that as the head end's `PublicKey` for this client's `[Peer]` block.
 
