@@ -1,14 +1,8 @@
 # wireguard
 
-Docker image that maintains a persistent WireGuard tunnel from a client site back to a head end. Replaces `autossh` for cases needing bulk/large file transfer performance and native routing instead of SSH port-forwarding gymnastics.
+Docker image that maintains a persistent WireGuard tunnel from a client site back to a head end.
 
 All outbound-to-LAN traffic is source-NAT'd (masquerade) so the client's LAN devices need zero routing/config changes to reply. Destination NAT (subnet remap) is optional, for when a client's real LAN subnet collides with another client's.
-
-## Architecture
-
-- **Head end**: plain Ubuntu host, kernel WireGuard (`wg-quick`), one `[Peer]` per client.
-- **Client**: this container, one per site. Requires `CAP_NET_ADMIN` + `/dev/net/tun` to bring up its own `wg0` and manage NAT rules — scoped to the container's own network namespace only.
-- You reach a client's LAN by dialing an address in that client's subnet (real or shadow) directly; the container transparently forwards.
 
 ## Head end setup
 
