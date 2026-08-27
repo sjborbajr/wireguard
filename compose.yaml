@@ -1,0 +1,17 @@
+services:
+  wg-client:
+    build: .
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    volumes:
+      - ./keys:/keys
+    environment:
+      HEADEND_PUBKEY: "<headend-public-key>"
+      HEADEND_ENDPOINT: "headend:port"
+      HEADEND_ALLOWED_IPS: "100.64.0.1/32"
+      CLIENT_TUNNEL_IP: "100.64.0.2/32"
+      REAL_LAN_SUBNET: "192.0.2.0/24"
+      SHADOW_SUBNET: "198.51.100.0/24"
+    restart: unless-stopped
