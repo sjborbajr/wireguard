@@ -13,4 +13,5 @@ if [ -n "$SHADOW_SUBNET" ] && [ "$SHADOW_SUBNET" != "$REAL_LAN_SUBNET" ]; then
     dnat ip to ip daddr and $MASK_INV or $REAL_NET
 fi
 
-nft add rule ip nat postrouting oifname "eth0" masquerade
+EGRESS_IF="${EGRESS_IF:-$(ip route show default | awk '/default/ {print $5; exit}')}"
+nft add rule ip nat postrouting oifname "$EGRESS_IF" masquerade
