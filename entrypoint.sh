@@ -26,5 +26,6 @@ AllowedIPs = ${HEADEND_ALLOWED_IPS}
 PersistentKeepalive = 25
 EOF
 
+ip link show wg0 &>/dev/null && wg-quick down wg0
 wg-quick up wg0
 sleep infinity
