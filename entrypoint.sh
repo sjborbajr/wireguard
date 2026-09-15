@@ -17,7 +17,6 @@ cat > /etc/wireguard/wg0.conf <<EOF
 PrivateKey = ${PRIVKEY}
 Address = ${CLIENT_TUNNEL_IP}
 PostUp = /usr/local/bin/setup-nat.sh
-PostDown = /usr/local/bin/teardown-nat.sh
 
 [Peer]
 PublicKey = ${HEADEND_PUBKEY}
