@@ -17,5 +17,9 @@ EGRESS_IF="${EGRESS_IF:-$(ip route show default | awk '/default/ {print $5; exit
 nft add rule ip nat postrouting oifname "$EGRESS_IF" masquerade
 
 if [ -n "$SRC_IP" ]; then
-  ip route replace "$REAL_LAN_SUBNET" dev wg0 scope link src "$SRC_IP"
+  IFS=',' read -ra ALLOWED <<< "$HEADEND_ALLOWED_IPS"
+  for cidr in "${ALLOWED[@]}"; do
+    [[ "$cidr" == */32 ]] && continue
+    ip route replace "$cidr" dev wg0 scope link src "$SRC_IP"
+  done
 fi
